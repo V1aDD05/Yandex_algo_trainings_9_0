@@ -42,3 +42,16 @@
 
 # debug information files
 *.dwo
+
+#folder with exaples of .cpp files
+Templates/
+
+#directories for executables
+build/
+
+#internal folders with developer debug information
+debug/
+
+#input files for fast testing during competition
+
+*input.txt
