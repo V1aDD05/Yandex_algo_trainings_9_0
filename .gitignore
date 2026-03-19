@@ -46,6 +46,9 @@
 #folder with exaples of .cpp files
 Templates/
 
+#folder with solutions to LeetCode tasks
+Additional tasks/
+
 #directories for executables
 build/
 
