@@ -28,7 +28,7 @@ string wrap(const string &input)
         {
             codedChar = static_cast<char>('a' + (bufChar - '0') - 1);
         }
-        result.push_back(codedChar);
+        result.insert(result.begin(), codedChar);
     }
 
     return result;
@@ -43,12 +43,7 @@ int main()
 
     string result = wrap(input);
 
-    size_t resSize = result.size();
-    for (size_t j = resSize; j-- > 0;)
-    {
-        cout << result[j];
-    }
-    cout << endl;
+    cout << result << endl;
 
     return 0;
 }
