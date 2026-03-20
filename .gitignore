@@ -58,3 +58,5 @@ debug/
 #input files for fast testing during competition
 
 *input.txt
+*output.txt
+*test.txt
