@@ -6,6 +6,7 @@ using namespace std;
 
 void wrap(const string& input){
     ifstream inputFile(input);
+    //последовательность строго возрастающая, достаточно set
     unordered_set<int> prefs;
     prefs.insert(0);
 
