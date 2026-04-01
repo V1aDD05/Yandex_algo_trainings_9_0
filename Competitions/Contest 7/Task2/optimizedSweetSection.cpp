@@ -27,45 +27,31 @@ void wrap(const string &input)
     int left = 0;
     int right = 0;
 
-    if (n == 1)
+    while (right < n)
     {
-        cout << 1 << endl;
-    }
-    else
-    {
-        ++cookiesMap[cookiesType[left]];
-        right = 1;
-        auto it = cookiesMap.begin();
-        while (right < n)
+        ++cookiesMap[cookiesType[right]];
+        size_t mapSize = cookiesMap.size();
+        if (mapSize == 2)
         {
-            ++cookiesMap[cookiesType[right]];
-            if (cookiesMap.size() < 2)
+            int bufLen = right - left + 1;
+            maxLen = max(maxLen, bufLen);
+        }
+        else if (mapSize > 2)
+        {
+            while (cookiesMap.size() > 2)
             {
-
-                ++right;
-            }
-            else if (cookiesMap.size() == 2)
-            {
-                int bufLen = right - left + 1;
-                maxLen = max(maxLen, bufLen);
-                ++right;
-            }
-            else
-            {
-                while (cookiesMap.size() > 2)
+                --cookiesMap[cookiesType[left]];
+                if (cookiesMap[cookiesType[left]] == 0)
                 {
-                    --cookiesMap[cookiesType[left]];
-                    if (cookiesMap[cookiesType[left]] == 0)
-                    {
-                        cookiesMap.erase(cookiesType[left]);
-                    }
-                    ++left;
+                    cookiesMap.erase(cookiesType[left]);
                 }
-                ++right;
+                ++left;
             }
         }
-        cout << maxLen << endl;
+        ++right;
     }
+
+    cout << maxLen << endl;
 
     //
 }
