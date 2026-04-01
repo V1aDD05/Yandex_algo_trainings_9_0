@@ -13,9 +13,6 @@ void wrap(const string &input)
     string order;
     inputFile >> order;
 
-    int left;
-    int right;
-
     unordered_map<int, int> quantity;
     quantity[0] = 1;
     int prefDiff = 0;
@@ -42,6 +39,14 @@ void wrap(const string &input)
         result += static_cast<long long int>(it->second) * (it->second - 1) / 2;
         ++it;
     }
+
+    //либо:
+    /*
+    for (auto summand : quantity)
+    {
+        result += static_cast<long long int>(summand.second) * (summand.second - 1) / 2;
+    }
+    */
 
     cout << result << endl;
     
