@@ -8,73 +8,42 @@ void wrap(const string &input)
 {
     ifstream inputFile(input);
 
-    vector<int> operands;
-    vector<pair<char, int>> operators;
-    int operandsCounter = 0;
+    stack<int> operands;
 
     char bufChar;
-    string intStr;
-    bool isInsideInt = false;
+    int left, right;
 
     while (inputFile.get(bufChar) && bufChar != '\n')
     {
-        if (isInsideInt)
+
+        if (bufChar - '0' >= 0 && bufChar - '0' <= 9)
         {
-            if (bufChar == ' ')
-            {
-                isInsideInt = false;
-                operands.push_back(stoi(intStr));
-                intStr.clear();
-                ++operandsCounter;
-            }
-            else {
-                intStr.push_back(bufChar);
-            }
+            operands.push(bufChar - '0');
         }
-        else if (bufChar != ' ')
+        else if (bufChar == '+' || bufChar == '-' || bufChar == '*')
         {
-            if (bufChar == '+' || bufChar == '-' || bufChar == '*' || bufChar == '/')
+            right = operands.top();
+            operands.pop();
+            left = operands.top();
+            operands.pop();
+
+            if (bufChar == '+')
             {
-                operators.push_back({bufChar, operandsCounter});
+                operands.push(left + right);
             }
-            else {
-                intStr.push_back(bufChar);
-                isInsideInt = true;
+            else if (bufChar == '-')
+            {
+                operands.push(left - right);
+            }
+            else if (bufChar == '*')
+            {
+                operands.push(left * right);
             }
         }
     }
 
-    int deductibleCoef = 1;
-
-
-
-    for (const auto &op : operators)
-    {
-        int left = operands[op.second - deductibleCoef - 1];
-        int right = operands[op.second - deductibleCoef];
-        if (op.first == '+')
-        {
-            operands[op.second - deductibleCoef] = left + right;
-        }
-        else if (op.first == '-')
-        {
-            operands[op.second - deductibleCoef] = left - right;
-        }
-        else if (op.first == '*')
-        {
-            operands[op.second - deductibleCoef] = left * right;
-        }
-        else if (op.first == '/')
-        {
-            operands[op.second - deductibleCoef] = left / right;
-        }
-
-        auto it = operands.begin() + op.second - deductibleCoef - 1;
-        operands.erase(it);
-        ++deductibleCoef;
-    }
-
-    cout << operands[0] << endl;
+    cout << operands.top() << endl;
+    operands.pop();
 }
 
 // void test(){}
