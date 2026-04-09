@@ -4,6 +4,19 @@ using namespace std;
 
 // #define LOCAL
 
+//функция переноса верхней скобки/операции в стеке в постфиксную запись
+void popPostfixStack(string &postfixStr, stack<char> &postfixStack)
+{
+    if (!postfixStack.empty())
+    {
+        postfixStr += postfixStack.top();
+        postfixStr += ' ';
+        postfixStack.pop();
+    }  
+}
+
+//функция работы со стеком скобок и операций
+//при добавлении новой скобки / операции
 bool postfixStackProcessing(string &postfixStr, stack<char> &postfixStack, const char newChar)
 {
     bool isPossible = true;
@@ -11,10 +24,7 @@ bool postfixStackProcessing(string &postfixStr, stack<char> &postfixStack, const
     {
         while (!postfixStack.empty() && (postfixStack.top() == '+' || postfixStack.top() == '-' || postfixStack.top() == '*'))
         {
-            postfixStr += postfixStack.top();
-            postfixStr += ' ';
-
-            postfixStack.pop();
+            popPostfixStack(postfixStr, postfixStack);
         }
         postfixStack.push(newChar);
     }
@@ -22,10 +32,7 @@ bool postfixStackProcessing(string &postfixStr, stack<char> &postfixStack, const
     {
         while (!postfixStack.empty() && (postfixStack.top() == '*'))
         {
-            postfixStr += postfixStack.top();
-            postfixStr += ' ';
-
-            postfixStack.pop();
+            popPostfixStack(postfixStr, postfixStack);
         }
         postfixStack.push(newChar);
     }
@@ -38,9 +45,7 @@ bool postfixStackProcessing(string &postfixStr, stack<char> &postfixStack, const
         isPossible = false;
         while (!postfixStack.empty() && postfixStack.top() != '(')
         {
-            postfixStr += postfixStack.top();
-            postfixStr += ' ';
-            postfixStack.pop();
+            popPostfixStack(postfixStr, postfixStack);
         }
         if (!postfixStack.empty() && postfixStack.top() == '(')
         {
@@ -51,6 +56,7 @@ bool postfixStackProcessing(string &postfixStr, stack<char> &postfixStack, const
     return isPossible;
 }
 
+//функция вычисления для постфиксной записи
 void postfixComputation(string &postfixStr)
 {
     stack<int> operands;
@@ -147,6 +153,15 @@ void postfixComputation(string &postfixStr)
     }
 }
 
+//функция переноса выделенного числа в постфиксную запись
+void intEnd(string &postfixStr, string &intStr, bool &isInsideInt)
+{
+    postfixStr += intStr;
+    postfixStr += ' ';
+    intStr.clear();
+    isInsideInt = false;
+}
+
 void wrap(const string &input)
 {
     ifstream inputFile(input);
@@ -170,14 +185,11 @@ void wrap(const string &input)
         {
             if (isInsideInt)
             {
-                postfixStr += intStr;
-                postfixStr += ' ';
-                intStr.clear();
+                intEnd(postfixStr, intStr, isInsideInt);
             }
-            isInsideInt = false;
             unarySuspect = false;
         }
-        else if (bufChar - '0' >= 0 && bufChar - '0' <= 9)
+        else if (isdigit(static_cast<unsigned char>(bufChar)))
         {
             if (isInsideInt)
             {
@@ -214,10 +226,7 @@ void wrap(const string &input)
                 {
                     if (isInsideInt)
                     {
-                        postfixStr += intStr;
-                        postfixStr += ' ';
-                        intStr.clear();
-                        isInsideInt = false;
+                        intEnd(postfixStr, intStr, isInsideInt);
                     }
                     previous = 'o';
                     isPossible = postfixStackProcessing(postfixStr, postfixStack, bufChar);
@@ -235,10 +244,7 @@ void wrap(const string &input)
             {
                 if (isInsideInt)
                 {
-                    postfixStr += intStr;
-                    postfixStr += ' ';
-                    intStr.clear();
-                    isInsideInt = false;
+                    intEnd(postfixStr, intStr, isInsideInt);
                 }
                 previous = 'o';
                 isPossible = postfixStackProcessing(postfixStr, postfixStack, bufChar);
@@ -270,10 +276,7 @@ void wrap(const string &input)
             {
                 if (isInsideInt)
                 {
-                    postfixStr += intStr;
-                    postfixStr += ' ';
-                    intStr.clear();
-                    isInsideInt = false;
+                    intEnd(postfixStr, intStr, isInsideInt);
                 }
                 previous = 'c';
                 isPossible = postfixStackProcessing(postfixStr, postfixStack, bufChar);
@@ -306,9 +309,7 @@ void wrap(const string &input)
     {
         if (postfixStack.top() == '+' || postfixStack.top() == '-' || postfixStack.top() == '*')
         {
-            postfixStr += postfixStack.top();
-            postfixStr += ' ';
-            postfixStack.pop();
+            popPostfixStack(postfixStr, postfixStack);
         }
         // случай, если там остались открывающие скобки
         else
