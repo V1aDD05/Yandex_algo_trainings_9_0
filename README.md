@@ -1,4 +1,16 @@
 # Yandex_algo_trainings_9_0
-Solutions of training and competition tasks from Yandex Algorithm trainings 9.0 (March-April 2026). Repository includes only solved tasks. Directory 'Competitions' contains solutions of competition (contest) tasks, directory 'Training tasks' - solutions of training tasks.
+Репозиторий содержит решения `58` задач на C++, представленных на мероприятии "Тренировки по алгоритмам 9.0" и дополнительных задач с `CodeRun`. Код приведён к промышленному стилю, без макросов, с осмысленными именами.
 
-Репозиторий содержит решения задач, представленных на мероприятии "Тренировки по алгоритмам 9.0". В директории 'Competitions' представлены решения соревновательных задач, в директории 'Training tasks' - тренировочных. 
+## Темы
+Задачи сгруппированы по темам. Темы расположены в алфавитном порядке.
+
+## Структура папок
+Каждая задача находится в отдельной папке с именем в snake_case и содержит .cpp файл и README.md с условием.
+
+## Компиляция
+Каждый файл – самодостаточное решение. Компилировать, например:
+g++ -std=c++17 two_pointers/cutting_trees/cutting_trees.cpp -o cutting_trees
+
+## Об авторе
+- Профиль на GitHub: https://github.com/V1aDD05
+- Резюме на hh.ru: https://hh.ru/resume/f983f03bff101c08bd0039ed1f45615759706f
