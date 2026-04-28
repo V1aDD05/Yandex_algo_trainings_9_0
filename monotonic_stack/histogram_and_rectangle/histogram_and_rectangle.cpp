@@ -5,7 +5,27 @@
 #include <vector>
 #include <stack>
 
+// функция формирования вектора кортежей (в кортеже - 
+// информация по каждому из столбцов гистограммы)
+std::vector<std::tuple<int, int, int>> fillHistogramVector(const int vecSize)
+{
+    // первое поле - высота столбца, второе - ближайший меньший справа,
+    //  третье - ближайший меньший слева
+    std::vector<std::tuple<int, int, int>> histVec;
+    histVec.reserve(vecSize);
 
+    for (int i = 0; i < vecSize; ++i)
+    {
+        int bufInt;
+        std::cin >> bufInt;
+        // по умолчанию ближайшие меньшие для всех элементов за пределеами массива
+        histVec.push_back({bufInt, vecSize, -1});
+    }
+    return histVec;
+}
+
+//функция заполнения стека рекордов (при проходе слева и при проходе справа)
+//для каждого из столбцов гистограммы
 void lessNeighbours(std::vector<std::tuple<int, int, int>> &histVec)
 {
     size_t vecSize = histVec.size();
@@ -46,6 +66,7 @@ void lessNeighbours(std::vector<std::tuple<int, int, int>> &histVec)
     }
 }
 
+//фнукция определения самого большого прямоугольника в гистограмме
 long long int maxSquare(const std::vector<std::tuple<int, int, int>> &histVec)
 {
     long long int maxSquare = 0;
@@ -61,24 +82,20 @@ long long int maxSquare(const std::vector<std::tuple<int, int, int>> &histVec)
 
 int main()
 {
+    //считываем число столбцов в гистограмме
     int vecSize;
     std::cin >> vecSize;
 
-    //первое поле - высота столбца, второе - ближайший меньший справа,
-    // третье - ближайший меньший слева
-    std::vector<std::tuple<int, int, int>> histVec;
-    histVec.reserve(vecSize);
+    // формируем вектор кортежей
+    // первое поле - высота столбца, второе - ближайший меньший справа,
+    //  третье - ближайший меньший слева
+    std::vector<std::tuple<int, int, int>> histVec = fillHistogramVector(vecSize);
 
-    for (int i = 0; i < vecSize; ++i)
-    {
-        int bufInt;
-        std::cin >> bufInt;
-        //по умолчанию ближайшие меньшие для всех элементов за пределеами массива
-        histVec.push_back({bufInt, vecSize, -1});
-    }
-
+    // заполненяем стек рекордов (при проходе слева и при проходе справа)
+    // для каждого из столбцов гистограммы
     lessNeighbours(histVec);
 
+    // определяем и выводим самый большой прямоугольник в гистограмме
     std::cout << maxSquare(histVec) << std::endl;
 
     return 0;

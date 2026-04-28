@@ -71,10 +71,11 @@ std::pair<int, int> solveEquation(int a, int b, int c)
 
 int main()
 {
+    //считываем коэффициенты уравнения
     int a, b, c;
-
     std::cin >> a >> b >> c;
 
+    //определяем решение уравнения
     std::pair<int, int> result = solveEquation(a, b, c);
 
     if (result.second == 1)

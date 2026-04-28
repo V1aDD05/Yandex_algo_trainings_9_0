@@ -7,6 +7,8 @@
 Сложность по времени: O(n).
 Сложность по памяти: O(n)
 */
+
+//структура, хранящая информацию о найденных множителях
 struct Candidates {
     std::pair<int, int> maxPos = {0,0};     //два наибольших "+" числа
     std::pair<int, int> maxNeg = {0, 0};    // два наибольших "-" числа
@@ -23,6 +25,8 @@ Candidates detectPairs(const std::vector<int> &inputVec)
     {
         if (member > 0)
         {
+            //в зависимости от количества кандидатов на максимальный
+            //множитель, по-разному располагаем найденный множитель
             ++candidate.posCounter;
             if (candidate.posCounter == 1)
             {
@@ -55,6 +59,9 @@ Candidates detectPairs(const std::vector<int> &inputVec)
         }
         if (member < 0)
         {
+
+            // в зависимости от количества кандидатов на максимальный
+            // множитель, по-разному располагаем найденный множитель
             ++candidate.negCounter;
             if (candidate.negCounter == 1)
             {
@@ -90,6 +97,8 @@ Candidates detectPairs(const std::vector<int> &inputVec)
     return candidate;
 }
 
+//функция выбора пары множителей, дающих максимальное произведение,
+//из найденных кандидатов 
 std::pair<int, int> choosePair(const Candidates& candidate)
 {
     std::pair<int, int> result;
@@ -129,6 +138,7 @@ std::pair<int, int> choosePair(const Candidates& candidate)
     return result;
 }
 
+// функция определения пары множителей, дающих максимальное произведение
 std::pair<int, int> findMaxPair(const std::vector<int> &inputVec)
 {
     size_t vecSize = inputVec.size();
@@ -162,6 +172,7 @@ int main()
         inputVec.push_back(buf);
     }
 
+    //определяем пару множителей, дающих максимальное произведение
     std::pair<int, int> outputPair = findMaxPair(inputVec);
 
     std::cout << outputPair.first << " " << outputPair.second << std::endl;

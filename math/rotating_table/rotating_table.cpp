@@ -6,7 +6,24 @@
 Сложность по памяти: O(n)
 */
 
+// функция формирования вектора блюд, приготовленных шеф-поваром
+// для каждого из гостей
+std::vector<int> fillInitialPlacement(const int n)
+{
+    std::vector<int> initialPlacement;
+    initialPlacement.reserve(n);
 
+    for (int i = 0; i < n; ++i)
+    {
+        int bufInt;
+        std::cin >> bufInt;
+        //декрементируем, потому что в условии задачи отсчёт с 1
+        initialPlacement.push_back(bufInt - 1);
+    }
+    return initialPlacement;
+}
+
+// функция определения минимального поворота стола
 int findMinShift(const std::vector<int> &initialPlacement)
 {
     size_t n = initialPlacement.size();
@@ -39,19 +56,14 @@ int findMinShift(const std::vector<int> &initialPlacement)
 
 int main()
 {
+    //считываем количество гостей
     int n;
     std::cin >> n;
 
-    std::vector<int> initialPlacement;
-    initialPlacement.reserve(n);
+    //формируем вектор блюд, приготовленных шеф-поваром для каждого из гостей
+    std::vector<int> initialPlacement = fillInitialPlacement(n);
 
-    for (int i = 0; i < n; ++i)
-    {
-        int bufInt;
-        std::cin >> bufInt;
-        initialPlacement.push_back(bufInt - 1);
-    }
-
+    //определяем и выводим минимальный поворот стола
     std::cout << findMinShift(initialPlacement) << std::endl;
 
     return 0;

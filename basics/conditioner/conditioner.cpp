@@ -1,6 +1,11 @@
 #include <iostream>
 #include <string>
 
+/*
+Сложность по времени: O(1),
+Сложность по памяти: O(1)
+*/
+
 int detectTemperature(const int troom, const int tcond, const std::string &mode)
 {
     int tResult;

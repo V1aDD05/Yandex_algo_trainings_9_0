@@ -2,6 +2,13 @@
 #include <string>
 #include <unordered_map>
 
+/*
+Сложность по времени: O(n), где
+n - количество пар синонимов
+Сложность по памяти: O(n).
+*/
+
+// функция заполнения словаря синонимов
 std::unordered_map<std::string, std::string> enterDictionary(const int quantity, std::istream &in)
 {
     std::unordered_map<std::string, std::string> synDict;

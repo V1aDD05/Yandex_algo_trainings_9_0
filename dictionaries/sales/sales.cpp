@@ -3,11 +3,20 @@
 #include <string>
 #include <map>
 
-int main()
+/*
+Сложность по времени: O(n), n - количество запросов
+Сложность по памяти: O(m*k), где
+m - количество клиентов, k - количество наименований товаров
+*/
+
+//функция заполнения "базы данных"
+std::map<std::string, std::map<std::string, long int>> fillDB()
 {
+    // двумерный словарь, имитирующий "базу данных":
+    // для кадого клиента хранится список наимнований товаров,
+    // для каждого наименования товара - количество купленного
     std::map<std::string, std::map<std::string, long int>> dataBase;
 
-    
     std::string customer;
     std::string subject;
     long int subQuantity;
@@ -20,6 +29,13 @@ int main()
         dataBase[customer][subject] += subQuantity;
     }
 
+    return dataBase;
+}
+
+//функция вывода данных
+void outputData(const std::map<std::string, std::map<std::string, long int>> &dataBase)
+{
+    // выводим информацию по каждому покупателю
     for (const auto &person : dataBase)
     {
         std::cout << person.first << ":" << std::endl;
@@ -32,6 +48,17 @@ int main()
             }
         }
     }
+}
+
+int main()
+{
+    //двумерный словарь, имитирующий "базу данных":
+    //для кадого клиента хранится список наимнований товаров,
+    //для каждого наименования товара - количество купленного
+    std::map<std::string, std::map<std::string, long int>> dataBase = fillDB();
+
+    // выводим информацию по каждому покупателю
+    outputData(dataBase);
 
     return 0;
 }

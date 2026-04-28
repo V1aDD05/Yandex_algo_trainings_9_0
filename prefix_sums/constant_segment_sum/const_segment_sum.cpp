@@ -8,6 +8,26 @@
 Сложность по памяти: O(N).
 */
 
+// функция формирования префиксных сумм
+std::vector<long long int> fillPrefixSums(const int n)
+{
+    // запросов будет много, поэтому будем хранить префиксные суммы
+    std::vector<long long int> sums;
+    sums.reserve(n + 1);
+    sums.push_back(0);
+
+    // формируем вектор префиксных сумм по входным данным
+    for (int i = 0; i < n; ++i)
+    {
+        int bufInt;
+        std::cin >> bufInt;
+        sums.push_back(sums[i] + bufInt);
+    }
+    return sums;
+}
+
+//функция обработки запросов по определению сумм элементов
+//и вычисления результирующей суммы
 long long int countSum(const int q, const int x0, const std::vector<long long int> &sums)
 {
     // сумма всех запросов
@@ -41,23 +61,14 @@ int main()
     std::cin >> n;
 
     // запросов будет много, поэтому будем хранить префиксные суммы
-    std::vector<long long int> sums;
-    sums.reserve(n + 1);
-    sums.push_back(0);
-
-    // формируем вектор префиксных сумм по входным данным
-    for (int i = 0; i < n; ++i)
-    {
-        int bufInt;
-        std::cin >> bufInt;
-        sums.push_back(sums[i] + bufInt);
-    }
+    std::vector<long long int> sums = fillPrefixSums(n);
 
     //считываем количество запросов и
     //начальное значение генератора случайных чисел
     int q, x0;
     std::cin >> q >> x0;
 
+    //выводим результат обработки запросов
     std::cout << countSum(q,x0,sums) % 1000000007 << std::endl;
 
     return 0;

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <utility>
+#include <utility> //std::pair
 #include <stack>
 #include <vector>
 
@@ -9,6 +9,26 @@
 Сложность по памяти: O(n)
 */
 
+// функция вывода информации о том, из какого города в какой будут переселяться
+void outputRelocationTown(const std::vector<int> &towns)
+{
+    bool isFirst = true;
+    for (const auto &town : towns)
+    {
+        if (isFirst)
+        {
+            isFirst = false;
+            std::cout << town;
+        }
+        else
+        {
+            std::cout << ' ' << town;
+        }
+    }
+    std::cout << std::endl;
+}
+
+//функция определения, из какого города в какой будут переселяться
 std::vector<int> relocation(const int n)
 {
     //вектор, хранящий информацию о переселении
@@ -39,26 +59,15 @@ std::vector<int> relocation(const int n)
 
 int main()
 {
+    //считываем количество городов
     int n;
     std::cin >> n;
 
-    // вектор, хранящий информацию о переселении
+    // создаём и заполняем вектор, хранящий информацию о переселении
     std::vector<int> towns = relocation(n);
 
-    bool isFirst = true;
-    for (const auto &town : towns)
-    {
-        if (isFirst)
-        {
-            isFirst = false;
-            std::cout << town;
-        }
-        else
-        {
-            std::cout << ' ' << town;
-        }
-    }
-    std::cout << std::endl;
+    //выводим информацию о том, куда из какого города переселились
+    outputRelocationTown(towns);
 
     return 0;
 }

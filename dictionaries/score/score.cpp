@@ -3,6 +3,13 @@
 #include <string>
 #include <unordered_map>
 
+/*
+Сложность по времени: O(n + m), где
+n - количество игроков, m - количество запросов
+Сложность по памяти: O(n).
+*/
+
+//функция заполнения ключей словаря (фамилий игроков)
 void enterPlayers(std::unordered_map<std::string, int> &gameNotes, const int playersQuantity, std::istream &in)
 {
     std::string bufString;
@@ -13,6 +20,7 @@ void enterPlayers(std::unordered_map<std::string, int> &gameNotes, const int pla
     }
 }
 
+//функция заполнения значений словаря по стенограмме игры 
 void enterScore(std::unordered_map<std::string, int> &gameNotes, const int notesQouantity, std::istream &in)
 {
     int leftPrev, leftCurr, rightPrev, rightCurr;
@@ -50,6 +58,7 @@ void enterScore(std::unordered_map<std::string, int> &gameNotes, const int notes
     }
 }
 
+//функция поиска самого результативного игрока
 std::string getMaxName(std::unordered_map<std::string, int> &gameNotes)
 {
     int maxSum = 0;
@@ -71,19 +80,23 @@ std::string getMaxName(std::unordered_map<std::string, int> &gameNotes)
 
 int main()
 {
-    // заносим в словарь игроков
+    //считываем количество игроков
     int playersQuantity;
     std::cin >> playersQuantity;
     std::cin.ignore();
+
+    //словарь игроков: ключ - фамилия, значение - счёт
     std::unordered_map<std::string, int> gameNotes;
 
+    // заносим в словарь игроков
     enterPlayers(gameNotes, playersQuantity, std::cin);
 
-    // заносим в словарь стенограмму игры
+    //считываем количество записей
     int notesQouantity;
     std::cin >> notesQouantity;
     std::cin.ignore();
 
+    // заносим в словарь стенограмму игры
     enterScore(gameNotes, notesQouantity, std::cin);
 
     //выводим результат игрока, забившего больше всех

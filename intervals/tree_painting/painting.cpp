@@ -2,23 +2,38 @@
 #include <algorithm>
 #include <tuple>
 
-void chooseSides(const int p, const int v, const int q, const int m, std::pair<int, int> &right, std::pair<int, int> &left)
+/*
+Сложность по времени: O(1)
+Сложность по памяти: O(1).
+*/
+
+struct ColourParams
+{
+    int centerVasya;
+    int radiusVasya;
+    int centerMary;
+    int radiusMary;
+};
+
+// функция формирования пар в зависимости от расположения центральных деревьев
+void chooseSides(const ColourParams &params, std::pair<int, int> &right, std::pair<int, int> &left)
 {
     // если дерево p Васи правее дерева q Маши
-    if (p >= q)
+    if (params.centerVasya >= params.centerMary)
     {
-        left = {q, m};
-        right = {p, v};
+        left = {params.centerMary, params.radiusMary};
+        right = {params.centerVasya, params.radiusVasya};
     }
 
     // наоборот
     else
     {
-        left = {p, v};
-        right = {q, m};
+        left = {params.centerVasya, params.radiusVasya};
+        right = {params.centerMary, params.radiusMary};
     }
 }
 
+//функция подсчёта закрашенных деревьев
 int countColoured(const std::pair<int, int> &right, const std::pair<int, int> &left)
 {
     int result;
@@ -44,11 +59,14 @@ int main()
     int p, v, q, m;
     std::cin >> p >> v >> q >> m;
 
+    //структура, хранящая входные параметры
+    ColourParams params = {p, v, q, m};
+
     //пара "координата центрального дерева - радиус"
     std::pair<int,int> right, left;
 
     //формирование пар в зависимости от расположения центральных деревьев
-    chooseSides(p, v, q, m, right, left);
+    chooseSides(params, right, left);
 
     //вывод количества покрашенных деревьев
     std::cout << countColoured(right, left) << std::endl;

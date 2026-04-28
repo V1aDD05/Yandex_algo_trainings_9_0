@@ -1,6 +1,11 @@
 #include <iostream>
 #include <stack>
 
+/*
+Сложность по времени: O(n), n - размер входной СП
+Сложность по памяти: O(n)
+*/
+
 int main()
 {
 
@@ -9,12 +14,15 @@ int main()
     дополнительную структуру для хранения входных данных,
     подробнее см. Readme, раздел "Примечание по реализации"
     */
-    
-    std::stack<char> cpsStack;
-    char bufChar;
 
+    // стек, применяемый для проверки на 
+    // правильную скобочную последовательность (ПСП)
+    std::stack<char> cpsStack;
+
+    // флаг правильности скобочной последовательности
     bool isCPS = true;
 
+    char bufChar;
     while (std::cin.get(bufChar) && bufChar != '\n')
     {
         if (bufChar == '(' || bufChar == '{' || bufChar == '[')
@@ -59,6 +67,7 @@ int main()
         }
     }
 
+    // СП правильная, если после обработки всей последовательности стек пустой
     if (!cpsStack.empty())
     {
         isCPS = false;
